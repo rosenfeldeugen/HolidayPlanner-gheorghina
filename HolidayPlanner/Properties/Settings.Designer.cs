@@ -22,5 +22,29 @@ namespace HolidayPlanner.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("HrEmail@sr.ty")]
+        public string HrEmail {
+            get {
+                return ((string)(this["HrEmail"]));
+            }
+            set {
+                this["HrEmail"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("HrName")]
+        public string HrName {
+            get {
+                return ((string)(this["HrName"]));
+            }
+            set {
+                this["HrName"] = value;
+            }
+        }
     }
 }

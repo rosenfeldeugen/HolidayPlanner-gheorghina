@@ -25,5 +25,29 @@ namespace HolidayPlanner.Domain
             return FromDate < ToDate; //And others
         }
 
+        public void UpdateSender(string name, string email)
+        {
+            this.FromEmployeeName = name;
+            this.FromEmployeeEmail = email;
+        }
+
+        public void UpdateRecipient(string name, string email)
+        {
+            this.ToEmployeeName = name;
+            this.ToEmployeeEmail = email;
+        }
+
+        public void SwitchReceiverWithSender()
+        {
+            var fromName = this.FromEmployeeName;
+            var fromEmail = this.FromEmployeeEmail;
+
+            this.FromEmployeeEmail = this.ToEmployeeEmail;
+            this.FromEmployeeName = this.ToEmployeeName;
+
+            this.ToEmployeeEmail = fromName;
+            this.ToEmployeeName = fromEmail;
+        }
+
     }
 }

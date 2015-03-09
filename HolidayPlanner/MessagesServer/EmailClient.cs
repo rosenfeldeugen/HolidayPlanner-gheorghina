@@ -10,7 +10,7 @@ namespace HolidayPlanner.MessagesServer
 {
     public class EmailClient : IEmailClient
     {
-        private Dictionary<Employee, Action<HolidayRequest>> subscriptions;
+        private Dictionary<string, Action<HolidayRequest>> subscriptions;
         private IEventSystem eventSystem;
 
         public EmailClient() : this(new EventSystem())
@@ -20,18 +20,18 @@ namespace HolidayPlanner.MessagesServer
         public EmailClient(IEventSystem eventSystem)
         {
             this.eventSystem = eventSystem;
-            subscriptions = new Dictionary<Employee, Action<HolidayRequest>>();
+            subscriptions = new Dictionary<string, Action<HolidayRequest>>();
         }
 
         public async virtual Task SubscribeAsync(Employee employee, Action<HolidayRequest> callback)
         {
-            subscriptions.Add(employee, callback);
+            subscriptions.Add(employee.Name, callback);
             await eventSystem.SubscribeAsync<HolidayRequest>(GetChannel(employee.Name), ChannelPattern.Literal, HandleNewRequest);
         }
 
         public async Task UnsubscribeAsync(Employee employee)
         {
-            subscriptions.Remove(employee);
+            subscriptions.Remove(employee.Name);
             await eventSystem.UnsubscribeAsync(GetChannel(employee.Name), ChannelPattern.Literal);
         }       
 
