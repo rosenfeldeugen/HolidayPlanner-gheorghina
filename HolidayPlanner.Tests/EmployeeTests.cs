@@ -10,19 +10,15 @@ namespace HolidayPlanner.Tests
 {
     [TestClass]
     public class EmployeeTests
-    {
-        [TestInitialize]
-        public void Setup()
-        {
-            emailClient = new Mock<EmailClient>();
-            employee = new Employee("John", "John@st.rl", EmployeeRole.Employee, new EmployeeSpecificActivity(), emailClient.Object);
-            manager = new Employee("Mary", "Mary@st.rl", EmployeeRole.Manager, new ManagerSpecificActivity(), emailClient.Object);
-            hrEmployee = new Employee("Emma", "Emma@st.rl", EmployeeRole.Hr, new HRSpecificActivity(), emailClient.Object);
-        }
-        
+    {        
         [TestMethod]
         public void SendHolidayRequest_WithSuccess()
         {           
+            //Arrange
+            var emailClient = new Mock<EmailClient>();
+            var employee = new Employee("John", "John@st.rl", EmployeeRole.Employee, new EmployeeSpecificActivity(), emailClient.Object);
+            var manager = new Employee("Mary", "Mary@st.rl", EmployeeRole.Manager, new ManagerSpecificActivity(), emailClient.Object);
+
             //Act
             employee.SendNewHolidayRequest(manager, DateTime.Now, DateTime.Now.AddDays(1));
 
@@ -32,54 +28,19 @@ namespace HolidayPlanner.Tests
         }
 
         [TestMethod]
-        public void UpdateHolidayRequest_WithSuccess()
+        public void UpdateHolidayRequest_PassInvalidRequest_ItWillBeUpdatedAndPassedToHrInTheEnd()
         {
             //Arrange
             var emailClient = new EmailClient();
-            employee = new Employee("John", "John@st.rl", EmployeeRole.Employee, new EmployeeSpecificActivity(), emailClient);
-            manager = new Employee("Mary", "Mary@st.rl", EmployeeRole.Manager, new ManagerSpecificActivity(), emailClient);
-           
-            var managerChannel = string.Format("Channel: {0}", manager.Name);            
-
-            //emailClient.Setup(e => e.SendEmail(It.IsAny<HolidayRequest>())).Callback<EmailClient>(e => e.HandleNewRequest(managerChannel, new HolidayRequest()));
-           
+            var employee = new Employee("John", "John@st.rl", EmployeeRole.Employee, new EmployeeSpecificActivity(), emailClient);
+            var manager = new Employee("Mary", "Mary@st.rl", EmployeeRole.Manager, new ManagerSpecificActivity(), emailClient);
+                 
             //Act
             employee.SendNewHolidayRequest(manager, DateTime.Now.AddDays(1), DateTime.Now);
 
             //Assert
-            //emailClient.Verify(x => x.SendEmailAsync(It.IsAny<HolidayRequest>()), Times.Once);
-            //mockActivity.Verify(a => a.ManageHolidayRequest(It.IsAny<HolidayRequest>()), Times.Never);
-        }
+            //that the thread does not get stuck in an infinite loop because of back and forth messaging
 
-        [TestMethod]
-        public void RejectHolidayRequest_WithSuccess()
-        {
-            //Arrange             
-
-            //Act
-            employee.SendNewHolidayRequest(manager, DateTime.Now, DateTime.Now.AddDays(1));
-
-            //Assert
-            emailClient.Verify(x => x.SendEmailAsync(It.IsAny<HolidayRequest>()), Times.Once());
-            emailClient.Verify(x => x.SubscribeAsync(It.IsAny<Employee>(), It.IsAny<Action<HolidayRequest>>()), Times.Exactly(3));
-        }
-
-        [TestMethod]
-        public void ApproveHolidayRequest_WithSuccess()
-        {
-            //Arrange
-         
-            //Act
-            employee.SendNewHolidayRequest(manager, DateTime.Now, DateTime.Now.AddDays(1));
-
-            //Assert
-            emailClient.Verify(x => x.SendEmailAsync(It.IsAny<HolidayRequest>()), Times.Once());
-            emailClient.Verify(x => x.SubscribeAsync(It.IsAny<Employee>(), It.IsAny<Action<HolidayRequest>>()), Times.Exactly(3));
-        } 
-
-        Mock<EmailClient> emailClient;
-        Employee employee;
-        Employee manager;
-        Employee hrEmployee;     
+        }           
     }
 }
