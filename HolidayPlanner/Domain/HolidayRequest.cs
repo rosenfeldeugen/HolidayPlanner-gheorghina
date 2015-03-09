@@ -6,9 +6,13 @@ namespace HolidayPlanner.Domain
     [Serializable]
     public class HolidayRequest
     {
-        public Employee FromEmployee { get; set; }
+        public string FromEmployeeName { get; set; }
 
-        public Employee ToEmployee { get; set; }
+        public string FromEmployeeEmail { get; set; }
+
+        public string ToEmployeeName { get; set; }
+
+        public string ToEmployeeEmail { get; set; }
 
         public DateTime FromDate { get; set; }
 

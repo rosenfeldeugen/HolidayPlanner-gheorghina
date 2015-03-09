@@ -9,10 +9,10 @@ namespace HolidayPlanner.MessagesServer
 {
     public interface IEmailClient
     {
-        void Subscribe(Employee employee, Action<HolidayRequest> callback);
+        Task SubscribeAsync(Employee employee, Action<HolidayRequest> callback);
 
-        void Unsubscribe(Employee employee);
+        Task UnsubscribeAsync(Employee employee);
 
-        void SendEmail(HolidayRequest request);
+        Task SendEmailAsync(HolidayRequest request);
     }
 }

@@ -14,7 +14,7 @@ namespace HolidayPlanner.Tests
             //Arrange
             var mockEntity = new MockEntity("1", "name");
             var serializer = new BinarySerializer();
-            const int expectedStreamLength = 215;
+            const int expectedStreamLength = 207;
 
             //Act
             var result = serializer.Serialize(mockEntity);
@@ -28,8 +28,7 @@ namespace HolidayPlanner.Tests
         [TestMethod]
         public void BinarySerializer_Deserialize_WithSuccess()
         {
-            //Arrange
-            const string testString = "\0\0\0\0????\0\0\0\0\0\0\0\f\0\0\0OHolidaysManagement.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\0\0\0#HolidaysManagement.Tests.MockEntity\0\0\0<Key>k__BackingField<Value>k__BackingField\0\0\0\0\0\01\0\0\0name\v";
+            const string testString = "\0\0\0\0????\0\0\0\0\0\0\0\f\0\0\0KHolidayPlanner.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\0\0\0HolidayPlanner.Tests.MockEntity\0\0\0<Key>k__BackingField<Value>k__BackingField\0\0\0\0\0\01\0\0\0name\v";
             var testStream = System.Text.Encoding.UTF8.GetBytes(testString);
 
             var expectedEntity = new MockEntity("1", "name");

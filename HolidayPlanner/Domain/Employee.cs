@@ -6,19 +6,20 @@ using System;
 
 namespace HolidayPlanner.Domain
 {
+    [Serializable]
     public class Employee
     {
-        private readonly IEmailClient emailServer;
+        private readonly IEmailClient emailClient;
 
-        public Employee(string name, string email, EmployeeRole role, IHolidayRequestActivity requestActivity, IEmailClient emailServer)
+        public Employee(string name, string email, EmployeeRole role, IHolidayRequestActivity requestActivity, IEmailClient emailClient)
         {
-            this.emailServer = emailServer;
+            this.emailClient = emailClient;
             Name = name;
             Email = email;
             Role = role;
             HolidayRequestActivity = requestActivity;
 
-            emailServer.Subscribe(this, OnEmailReceived);
+            emailClient.SubscribeAsync(this, OnEmailReceived);
         }
 
         public string Name { get; set; }
@@ -39,19 +40,21 @@ namespace HolidayPlanner.Domain
         {
             var newHolidayRequest = new HolidayRequest
             {
-                FromEmployee = this,
-                ToEmployee = toEmployee,
+                FromEmployeeName = this.Name,
+                FromEmployeeEmail = this.Email,
+                ToEmployeeName = toEmployee.Name,
+                ToEmployeeEmail = toEmployee.Email,
                 FromDate = fromDate,
                 ToDate = toDate,
                 Status = HolidayRequestStatus.InProgressForApproval
             };
-            emailServer.SendEmail(newHolidayRequest);
+            emailClient.SendEmailAsync(newHolidayRequest);
         }
 
-        private void OnEmailReceived(HolidayRequest newRequest)
+        internal void OnEmailReceived(HolidayRequest newRequest)
         {
             HolidayRequestActivity.ManageHolidayRequest(newRequest);
-            emailServer.SendEmail(newRequest);
+            emailClient.SendEmailAsync(newRequest);
         }
     }
 }

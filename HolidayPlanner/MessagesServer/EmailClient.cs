@@ -23,37 +23,37 @@ namespace HolidayPlanner.MessagesServer
             subscriptions = new Dictionary<Employee, Action<HolidayRequest>>();
         }
 
-        public virtual void Subscribe(Employee employee, Action<HolidayRequest> callback)
+        public async virtual Task SubscribeAsync(Employee employee, Action<HolidayRequest> callback)
         {
             subscriptions.Add(employee, callback);
-            eventSystem.SubscribeAsync<HolidayRequest>(GetChannel(employee), ChannelPattern.Literal, HandleNewRequest);
+            await eventSystem.SubscribeAsync<HolidayRequest>(GetChannel(employee.Name), ChannelPattern.Literal, HandleNewRequest);
         }
 
-        public void Unsubscribe(Employee employee)
+        public async Task UnsubscribeAsync(Employee employee)
         {
             subscriptions.Remove(employee);
-            eventSystem.UnsubscribeAsync(GetChannel(employee), ChannelPattern.Literal);
+            await eventSystem.UnsubscribeAsync(GetChannel(employee.Name), ChannelPattern.Literal);
         }       
 
-        public virtual void SendEmail(HolidayRequest request)
+        public async virtual Task SendEmailAsync(HolidayRequest request)
         {
-            eventSystem.PublishAsync<HolidayRequest>(GetChannel(request.ToEmployee), ChannelPattern.Literal, request);
+            await eventSystem.PublishAsync<HolidayRequest>(GetChannel(request.ToEmployeeName), ChannelPattern.Literal, request);
         }        
 
-        private void HandleNewRequest(string channel, HolidayRequest holidayRequest )
+        internal void HandleNewRequest(string channel, HolidayRequest holidayRequest )
         {
             foreach (var subscription in subscriptions)
             {
-                if (subscription.Key.Equals(holidayRequest.ToEmployee))
+                if (subscription.Key.Equals(holidayRequest.ToEmployeeName))
                 {
                     subscription.Value.Invoke(holidayRequest);
                 }
             }
         }
 
-        private string GetChannel(Employee employee)
+        private string GetChannel(string employeeName)
         {
-            return string.Format("Channel: {0}.{1}", employee.Name, employee.Role);
+            return string.Format("Channel: {0}", employeeName);
         }
        
         public object SendEmail(object p)

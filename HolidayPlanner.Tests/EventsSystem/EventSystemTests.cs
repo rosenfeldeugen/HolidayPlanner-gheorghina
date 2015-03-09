@@ -40,6 +40,8 @@ namespace HolidayPlanner.Tests
             var publishAsyncTask = Task.Factory.StartNew(async () => await eventSystem.PublishAsync(TestKey, ChannelPattern.Literal, expected));
             publishAsyncTask.Wait();
 
+            Thread.Sleep(5000);
+
             //Assert
             Assert.AreEqual(expected, result);  
         }
