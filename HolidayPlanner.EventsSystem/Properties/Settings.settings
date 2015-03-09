@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="HolidaysManagement.EventsSystem.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="MasterConnection" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">127.0.0.1:6379</Value>
+    </Setting>
+    <Setting Name="CachePassword" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">zJj2WovEib0eSaiJuwwgMxUOBKi+N5HSyDrxNcBq26FAl7QYd0W2pdHqO2O791VT0bk7q/KCdmtpg/lx72ACPQ==</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
