@@ -14,7 +14,7 @@ namespace HolidayPlanner.Tests
         [TestInitialize]
         public void Setup()
         {
-            emailServer = new Mock<EmailServer>();            
+            emailServer = new Mock<EmailClient>();            
         }
         
         [TestMethod]
@@ -33,6 +33,6 @@ namespace HolidayPlanner.Tests
             emailServer.Verify(x => x.Subscribe(It.IsAny<Employee>(), It.IsAny<Action<HolidayRequest>>()), Times.Exactly(3));
         }       
 
-        Mock<EmailServer> emailServer;
+        Mock<EmailClient> emailServer;
     }
 }

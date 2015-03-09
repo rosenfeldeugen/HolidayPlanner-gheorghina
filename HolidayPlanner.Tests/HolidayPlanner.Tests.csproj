@@ -56,7 +56,7 @@
     <Compile Include="EmployeeTests.cs" />
     <Compile Include="EventsSystem\BinarySerializerTests.cs" />
     <Compile Include="EventsSystem\EventSystemTests.cs" />
-    <Compile Include="MessagesServer\EmailServerTests.cs" />
+    <Compile Include="MessagesServer\EmailClientTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

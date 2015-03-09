@@ -8,7 +8,7 @@ using HolidayPlanner.Domain.Activities;
 namespace HolidayPlanner.Tests
 {
     [TestClass]
-    public class EmailServerTests
+    public class EmailClientTests
     {
         [TestInitialize]
         public void Setup()

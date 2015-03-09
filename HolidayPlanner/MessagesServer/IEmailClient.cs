@@ -7,7 +7,7 @@ using HolidayPlanner.Domain;
 
 namespace HolidayPlanner.MessagesServer
 {
-    public interface IEmailServer
+    public interface IEmailClient
     {
         void Subscribe(Employee employee, Action<HolidayRequest> callback);
 

@@ -8,9 +8,9 @@ namespace HolidayPlanner.Domain
 {
     public class Employee
     {
-        private readonly IEmailServer emailServer;
+        private readonly IEmailClient emailServer;
 
-        public Employee(string name, string email, EmployeeRole role, IHolidayRequestActivity requestActivity, IEmailServer emailServer)
+        public Employee(string name, string email, EmployeeRole role, IHolidayRequestActivity requestActivity, IEmailClient emailServer)
         {
             this.emailServer = emailServer;
             Name = name;

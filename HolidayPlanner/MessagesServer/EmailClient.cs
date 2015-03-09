@@ -8,16 +8,16 @@ using HolidayPlanner.EventsSystem;
 
 namespace HolidayPlanner.MessagesServer
 {
-    public class EmailServer : IEmailServer
+    public class EmailClient : IEmailClient
     {
         private Dictionary<Employee, Action<HolidayRequest>> subscriptions;
         private IEventSystem eventSystem;
 
-        public EmailServer() : this(new EventSystem())
+        public EmailClient() : this(new EventSystem())
         {
         }
 
-        public EmailServer(IEventSystem eventSystem)
+        public EmailClient(IEventSystem eventSystem)
         {
             this.eventSystem = eventSystem;
             subscriptions = new Dictionary<Employee, Action<HolidayRequest>>();

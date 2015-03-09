@@ -54,11 +54,11 @@
     <Compile Include="Domain\Activities\ManagerSpecificActivity.cs" />
     <Compile Include="Domain\Activities\IHolidayRequestActivity.cs" />
     <Compile Include="Domain\EmployeeRole.cs" />
-    <Compile Include="MessagesServer\EmailServer.cs" />
+    <Compile Include="MessagesServer\EmailClient.cs" />
     <Compile Include="Domain\Employee.cs" />
     <Compile Include="Domain\HolidayRequest.cs" />
     <Compile Include="Domain\HolidayRequestStatus.cs" />
-    <Compile Include="MessagesServer\IEmailServer.cs" />
+    <Compile Include="MessagesServer\IEmailClient.cs" />
     <Compile Include="LogExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
