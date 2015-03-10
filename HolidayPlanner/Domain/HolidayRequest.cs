@@ -20,11 +20,6 @@ namespace HolidayPlanner.Domain
 
         public HolidayRequestStatus Status { get; set; }
 
-        public bool IsValid()
-        {
-            return FromDate < ToDate; //And others
-        }
-
         public void UpdateSender(string name, string email)
         {
             this.FromEmployeeName = name;

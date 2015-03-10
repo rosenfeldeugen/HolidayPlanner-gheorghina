@@ -2,10 +2,10 @@
 
 namespace HolidayPlanner.Domain.Activities
 {
-    public class HRSpecificActivity : IHolidayRequestActivity
+    public class ProcessHolidayRequestActivity : IHolidayRequestActivity
     {
-        public void ManageHolidayRequest(HolidayRequest request)
-        {
+        public void UpdateRequest(HolidayRequest request)
+        {    
             request.Status = HolidayRequestStatus.Processed;
         }
     }

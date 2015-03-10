@@ -49,11 +49,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\Activities\HRSpecificActivity.cs" />
-    <Compile Include="Domain\Activities\EmployeeSpecificActivity.cs" />
-    <Compile Include="Domain\Activities\ManagerSpecificActivity.cs" />
+    <Compile Include="Domain\Activities\ApproveHolidayRequestActivity.cs" />
+    <Compile Include="Domain\Activities\ProcessHolidayRequestActivity.cs" />
+    <Compile Include="Domain\Activities\UpdateHolidayRequestActivity.cs" />
+    <Compile Include="Domain\Activities\RejectHolidayRequestActivity.cs" />
     <Compile Include="Domain\Activities\IHolidayRequestActivity.cs" />
     <Compile Include="Domain\EmployeeRole.cs" />
+    <Compile Include="Domain\Exceptions\UnsupportedActionException.cs" />
     <Compile Include="MessagesServer\EmailClient.cs" />
     <Compile Include="Domain\Employee.cs" />
     <Compile Include="Domain\HolidayRequest.cs" />

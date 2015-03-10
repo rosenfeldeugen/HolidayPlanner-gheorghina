@@ -3,21 +3,24 @@ using System.Linq;
 using HolidayPlanner.Domain.Activities;
 using HolidayPlanner.MessagesServer;
 using System;
+using HolidayPlanner.Domain.Exceptions;
+using System.Threading.Tasks;
 
 namespace HolidayPlanner.Domain
 {
     [Serializable]
     public class Employee
     {
-        private readonly IEmailClient emailClient;
+        private readonly IEmailClient emailClient;        
 
-        public Employee(string name, string email, EmployeeRole role, IHolidayRequestActivity requestActivity, IEmailClient emailClient)
+        public Employee(string name, string email, EmployeeRole role, List<IHolidayRequestActivity> supportedActivities, IEmailClient emailClient)
         {
             this.emailClient = emailClient;
             Name = name;
             Email = email;
             Role = role;
-            HolidayRequestActivity = requestActivity;
+            SupportedHolidayRequestActivities = supportedActivities;
+            ReceivedHolidayRequests = new List<HolidayRequest>();
 
             emailClient.SubscribeAsync(this, OnEmailReceived);
         }
@@ -28,7 +31,9 @@ namespace HolidayPlanner.Domain
 
         public EmployeeRole Role { get; set; }
 
-        public IHolidayRequestActivity HolidayRequestActivity { get; private set; }
+        public List<IHolidayRequestActivity> SupportedHolidayRequestActivities { get; private set; }
+
+        public List<HolidayRequest> ReceivedHolidayRequests{get; private set;}
 
         /// <summary>
         /// Sends the holiday request.
@@ -36,7 +41,7 @@ namespace HolidayPlanner.Domain
         /// <param name="toEmployee">To employee.</param>
         /// <param name="fromDate">From date.</param>
         /// <param name="toDate">To date.</param>
-        public void SendNewHolidayRequest(Employee toEmployee, DateTime fromDate, DateTime toDate)
+        public async Task SendNewHolidayRequest(Employee toEmployee, DateTime fromDate, DateTime toDate)
         {
             var newHolidayRequest = new HolidayRequest
             {
@@ -48,13 +53,25 @@ namespace HolidayPlanner.Domain
                 ToDate = toDate,
                 Status = HolidayRequestStatus.InProgressForApproval
             };
-            emailClient.SendEmailAsync(newHolidayRequest);
+            await emailClient.SendEmailAsync(newHolidayRequest);
+        }
+
+        public async Task UpdateHolidayRequest(HolidayRequest request, IHolidayRequestActivity activity) 
+        {
+            if (!SupportedHolidayRequestActivities.Contains(activity) || !ReceivedHolidayRequests.Contains(request))
+            {
+                throw new UnsupportedActionException();
+            }
+
+            activity.UpdateRequest(request);
+            await emailClient.SendEmailAsync(request);
+            
         }
 
         internal void OnEmailReceived(HolidayRequest newRequest)
         {
-            HolidayRequestActivity.ManageHolidayRequest(newRequest);
-            emailClient.SendEmailAsync(newRequest);
+            ReceivedHolidayRequests.Add(newRequest);
         }
+
     }
 }

@@ -6,6 +6,7 @@ using HolidayPlanner.EventsSystem;
 using HolidayPlanner.Domain.Activities;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace HolidayPlanner.Tests
 {
@@ -17,8 +18,8 @@ namespace HolidayPlanner.Tests
         {
             eventsystem = new EventSystem();
             emailClient = new EmailClient(eventsystem);
-            employee = new Employee("John", "John@st.rl", EmployeeRole.Employee, new EmployeeSpecificActivity(), emailClient);
-            manager = new Employee("Mary", "Mary@st.rl", EmployeeRole.Manager, new ManagerSpecificActivity(), emailClient);
+            employee = new Employee("John", "John@st.rl", EmployeeRole.Employee, employeeSupportedActivities, emailClient);
+            manager = new Employee("Mary", "Mary@st.rl", EmployeeRole.Manager, managerSupportedActivities, emailClient);
             initialHolidayRequest = new HolidayRequest { 
                 ToEmployeeName = manager.Name, 
                 ToEmployeeEmail = manager.Email,
@@ -55,10 +56,20 @@ namespace HolidayPlanner.Tests
             Assert.IsNotNull(receivedHolidayRequest);
         }
 
-        EventSystem eventsystem;
-        EmailClient emailClient;
-        Employee employee;
-        Employee manager;
-        HolidayRequest initialHolidayRequest;
+        private EventSystem eventsystem;
+        private EmailClient emailClient;
+        private Employee employee;
+        private Employee manager;
+        private HolidayRequest initialHolidayRequest;
+
+        private List<IHolidayRequestActivity> employeeSupportedActivities = new List<IHolidayRequestActivity>{
+            new UpdateHolidayRequestActivity()
+        };
+
+        private List<IHolidayRequestActivity> managerSupportedActivities = new List<IHolidayRequestActivity>{
+            new UpdateHolidayRequestActivity(),
+            new RejectHolidayRequestActivity(),
+            new ApproveHolidayRequestActivity()
+        };
     }
 }
