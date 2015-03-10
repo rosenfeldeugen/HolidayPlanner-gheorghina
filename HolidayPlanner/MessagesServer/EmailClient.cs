@@ -54,11 +54,7 @@ namespace HolidayPlanner.MessagesServer
         private string GetChannel(string employeeName)
         {
             return string.Format("Channel: {0}", employeeName);
-        }
-       
-        public object SendEmail(object p)
-        {
-            throw new NotImplementedException();
-        }
+        }      
+        
     }
 }
