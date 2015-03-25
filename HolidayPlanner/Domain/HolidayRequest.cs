@@ -20,18 +20,23 @@ namespace HolidayPlanner.Domain
 
         public HolidayRequestStatus Status { get; set; }
 
+        //CR: Don't see the reason for this function as long as FromEmployeeName and FromEmployeeEmail are public
         public void UpdateSender(string name, string email)
         {
+            //CR: this. is not necessary here
             this.FromEmployeeName = name;
             this.FromEmployeeEmail = email;
         }
 
+        //CR: idem
         public void UpdateRecipient(string name, string email)
         {
             this.ToEmployeeName = name;
             this.ToEmployeeEmail = email;
         }
 
+        //CR: I don't know if this should belong to HolidayRequest.
+        //from HolidayRequest point of view, this makes no sense
         public void SwitchReceiverWithSender()
         {
             var fromName = this.FromEmployeeName;
@@ -39,7 +44,7 @@ namespace HolidayPlanner.Domain
 
             this.FromEmployeeEmail = this.ToEmployeeEmail;
             this.FromEmployeeName = this.ToEmployeeName;
-
+            
             this.ToEmployeeEmail = fromName;
             this.ToEmployeeName = fromEmail;
         }

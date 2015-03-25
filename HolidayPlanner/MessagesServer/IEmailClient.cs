@@ -7,6 +7,7 @@ using HolidayPlanner.Domain;
 
 namespace HolidayPlanner.MessagesServer
 {
+    //CR: This can be removed. Only one class is implementing it
     public interface IEmailClient
     {
         Task SubscribeAsync(Employee employee, Action<HolidayRequest> callback);

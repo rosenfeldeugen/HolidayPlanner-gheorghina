@@ -6,6 +6,9 @@ namespace HolidayPlanner.EventsSystem
 {
     public class BinarySerializer
     {
+        //CR: The comments here are not useful
+
+
         /// <summary>
         /// Serializes the specified entity.
         /// </summary>

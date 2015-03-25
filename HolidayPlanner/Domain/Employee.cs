@@ -68,6 +68,7 @@ namespace HolidayPlanner.Domain
             
         }
 
+        //CR: this can be private
         internal void OnEmailReceived(HolidayRequest newRequest)
         {
             ReceivedHolidayRequests.Add(newRequest);

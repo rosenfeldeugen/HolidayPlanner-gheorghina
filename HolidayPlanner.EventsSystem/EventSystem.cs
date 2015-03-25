@@ -11,8 +11,15 @@ namespace HolidayPlanner.EventsSystem
     {
         private ISubscriber redisSubscriber;
         private readonly BinarySerializer binarySerializer;
+       
+        //CR: are this regions helpful?
+        //CR: usually regions are used when the class is not clear and when it has to many responsibilities
+        //CR: here is not case
 
         #region Constructor
+
+
+        //CR: comments not useful. They add no value to this code.
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventSystem"/> class.
@@ -41,6 +48,7 @@ namespace HolidayPlanner.EventsSystem
 
             var redisChannel = GetRedisChannel(channel, channelPattern);
 
+            //CR: I'm lost down there ;)
             return EnsureConnectionOpen(() =>
                 redisSubscriber.SubscribeAsync(redisChannel,
                 (responseChannel, responseValue) =>
@@ -111,6 +119,9 @@ namespace HolidayPlanner.EventsSystem
                 throw;
             }
         }
+
+
+        //CR: this is not used
 
         /// <summary>
         /// Ensures the cache connection is open.
